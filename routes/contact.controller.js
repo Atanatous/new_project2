@@ -1,5 +1,8 @@
 // routes/contact.controller.js
 
+// LOAD MODULE
+const fs = require('fs');
+
 // DEFINE MODEL
 var Contact = require('../models/contact');
 
@@ -42,6 +45,8 @@ exports.create = function(req, res){
     contact.name = req.body.name;
     contact.number = req.body.number;
     contact.email = req.body.email;
+    // contact.picture.data;
+    contact.source = req.body.source;
     contact.save(function(err){
         if (err){
             console.error(err);
@@ -49,7 +54,7 @@ exports.create = function(req, res){
             return;
         }
         console.log("New Contact Created");
-        res.json({result: 1});
+        res.json(contact._id);
      });           
 };
 
