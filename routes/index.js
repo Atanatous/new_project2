@@ -55,5 +55,6 @@ router.get('/images/:image_id', image_controller.index);
 
 router.post('/images', upload.single('userImage'), image_controller.create);
 
+
 // EXPORT AS MODULE
 module.exports = router;
