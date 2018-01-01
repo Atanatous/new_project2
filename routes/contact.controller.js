@@ -37,25 +37,33 @@ exports.find_by_name = function(req, res){
         res.json(contact);
     });
 };
-        
-
+      
 // CREATE CONTACT
 exports.create = function(req, res){
-    var contact = new Contact();
-    contact.name = req.body.name;
-    contact.number = req.body.number;
-    contact.email = req.body.email;
-    // contact.picture.data;
-    contact.source = req.body.source;
-    contact.save(function(err){
-        if (err){
-            console.error(err);
-            res.json({result: 0});
-            return;
+    Contact.find({name: req.params.name, number: req.params.number}, function(err, contact){
+        if (err) return res.status(500).json({ error: err });
+        if (!contact){
+            var contact = new Contact();
+            contact.name = req.body.name;
+            contact.number = req.body.number;
+            contact.email = req.body.email;
+            // contact.picture.data;
+            contact.source = req.body.source;
+            contact.save(function(err){
+                if (err){
+                    console.error(err);
+                    res.json({result: 0});
+                    return;
+                }   
+            console.log("New Contact Created");
+            res.send("Contact add to Server");
+            });
         }
-        console.log("New Contact Created");
-        res.json(contact.picture);
-     });           
+        else{
+            console.log("Duplicated Contact");
+            res.send("It's duplicated");
+        }
+    });
 };
 
 // UPDATE THE CONTACT
