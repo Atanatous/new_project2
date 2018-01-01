@@ -54,7 +54,7 @@ exports.create = function(req, res){
             return;
         }
         console.log("New Contact Created");
-        res.json(contact._id);
+        res.json(contact.picture);
      });           
 };
 
