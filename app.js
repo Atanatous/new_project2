@@ -23,13 +23,8 @@ db.once('open', function(){
 
 mongoose.connect('mongodb://localhost/test');
 
-// DEFINE MODEL
-var Book = require('./models/book');
-var Contact = require('./models/contact');
-var Picture = require('./models/picture');
-
 // [CONFIGURE ROUTER]
-var router = require('./routes')(app, Book, Contact, Picture);
+app.use('/api', require('./routes'));
 
 // [RUN SERVER]
 var server = app.listen(port, function(){   
