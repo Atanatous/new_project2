@@ -7,8 +7,8 @@ var bodyParser     = require('body-parser');
 var mongoose       = require('mongoose');
 
 // [CONFIGURE APP TO USE bodyParser]
-app.use(bodyParser.urlencoded({ extended: true  }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true  }));
+app.use(bodyParser.json({ limit: '50mb' }));
 
 // [CONFIGURE SERVER PORT]
 var port = 8080;

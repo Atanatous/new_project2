@@ -40,7 +40,7 @@ exports.find_by_name = function(req, res){
       
 // CREATE CONTACT
 exports.create = function(req, res){
-    Contact.find({name: req.params.name, number: req.params.number}, function(err, contact){
+/*    Contact.find({name: req.params.name, number: req.params.number}, function(err, contact){
         if (err) return res.status(500).json({ error: err });
         if (!contact){
             var contact = new Contact();
@@ -62,7 +62,23 @@ exports.create = function(req, res){
             console.log("Duplicated Contact");
             res.send("It's duplicated");
         }
-    });
+*/
+            var contact = new Contact();
+            contact.name = req.body.name;
+            contact.number = req.body.number;
+            // contact.picture.data;
+            contact.type = req.body.source;
+            contact.save(function(err){
+                if (err){
+                    console.error(err);
+                    res.json({result: 0});
+                    return;
+                }   
+            console.log("New Contact Created");
+            res.send("Contact add to Server");
+            });
+ 
+ //   });
 };
 
 // UPDATE THE CONTACT
