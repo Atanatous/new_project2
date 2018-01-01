@@ -6,15 +6,14 @@ const fs = require('fs');
 // DEFINE MODEL
 var Contact = require('../models/contact');
 
-
 // GET ALL CONTACTS 
 exports.show = function(req, res){
     Contact.find(function(err, contacts){
         if (err)
             return res.status(500).send({error: 'database failure'});
             res.json(contacts);
-        });
-    };
+    });
+};
 
 // GET SINGLE CONTACT
 exports.index = function(req, res){
@@ -67,24 +66,44 @@ exports.create = function(req, res){
             res.send("It's duplicated");
         }
 */
-    for (var key in req.body){    
-        var contact = new Contact();    
-        contact.name = req.body[key]["name"];
-        console.log(req.body[key]["name"]);
-        contact.number = req.body[key]["number"];   
-        // contact.picture.data;    
-        contact.type = req.body[key]["type"];
-        contact.save(function(err){              
-            if (err){
+
+    if (Array.isArray(req.body)) {    
+        for (var key in req.body){    
+            var contact = new Contact();    
+            contact.name = req.body[key]["name"];
+            contact.number = req.body[key]["number"];   
+            // contact.picture.data;    
+            contact.type = req.body[key]["type"];
+            contact.save(function(err){              
+                if (err){
+                    console.error(err);
+                    res.json({ result: 0 });
+                    return;
+                }   
+            });
+        }
+    console.log("Input New JSON Array");
+    res.send("Finish to put every contact in DB.");        
+    }    
+    else if (typeof(req.body) === 'object'){
+        var contact = new Contact();
+        contact.name = req.body.name;
+        contact.number = req.body.number;
+        contact.type = req.body.type;
+        contact.save(function(err){
+            if (err) {
                 console.error(err);
-                res.json({result: 0});
+                res.json({ result: 0 });
                 return;
-            }   
-            console.log("New Contact Created");
+            }
         });
+        res.send("Finish to put one contact in DB.");
+        console.log("Input New JSON Object");
     }
-    res.send("Finish to put every contact in DB.");
- //   });
+    else {
+        console.error("Bad Request Come");
+        res.json({ result: 0 });
+    }
 };
 
 // UPDATE THE CONTACT
