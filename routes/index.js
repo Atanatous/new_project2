@@ -7,6 +7,19 @@ const contact_controller     = require('./contact.controller');
 const book_controller        = require('./book.controller');
 const image_controller       = require('./image.controller');
 
+const fs = require('fs');
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './images')
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '_' + file.originalname);
+    }
+})
+const upload = multer({ storage: storage});
+
+
 // ROUTING CONTROL FOR CONTACT
 router.get('/contacts', contact_controller.show);
 
@@ -40,7 +53,7 @@ router.get('/images', image_controller.show);
 
 router.get('/images/:image_id', image_controller.index);
 
-router.post('/images', image_controller.create);
+router.post('/images', upload.single('userImage'), image_controller.create);
 
 // EXPORT AS MODULE
 module.exports = router;

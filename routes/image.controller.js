@@ -1,6 +1,17 @@
 // routes/image.controller.js
 
+// LOAD MODULES
 const fs = require('fs');
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './images')
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '_' + file.originalname);
+    }
+})
+const upload = multer({ storage: storage});
 
 // DEFINE MODEL
 var Image = require('../models/image');
@@ -25,6 +36,8 @@ exports.index = function(req, res){
 // CREATE IMAGE
 exports.create = function(req, res){
     var image = new Image();
+    
+    /*
     image.img.data = fs.readFileSync(req.files);
     image.img.contentType = 'image/png';
     image.save(function(err){
@@ -33,8 +46,16 @@ exports.create = function(req, res){
             res.json({result: 0});
             return;
         }
+        
         console.log("New Image Created");
         res.send(image.img.data);
     });
+   /
+    res.send(`
+            body: &{JSON.stringify(req.body)},<br/>
+            files: &{JSON.stringify(req.file)}
+            `);
+
+    */            
 };
 
