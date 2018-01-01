@@ -46,9 +46,8 @@ exports.create = function(req, res){
             var contact = new Contact();
             contact.name = req.body.name;
             contact.number = req.body.number;
-            contact.email = req.body.email;
             // contact.picture.data;
-            contact.source = req.body.source;
+            contact.type = req.body.source;
             contact.save(function(err){
                 if (err){
                     console.error(err);
