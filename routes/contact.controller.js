@@ -3,15 +3,14 @@
 // DEFINE MODEL
 var Contact = require('../models/contact');
 
-
 // GET ALL CONTACTS 
 exports.show = function(req, res){
     Contact.find(function(err, contacts){
         if (err)
             return res.status(500).send({error: 'database failure'});
             res.json(contacts);
-        });
-    };
+    });
+};
 
 // GET SINGLE CONTACT
 exports.index = function(req, res){
@@ -49,8 +48,8 @@ exports.create = function(req, res){
             return;
         }
         console.log("New Contact Created");
-        res.json({result: 1});
-     });           
+        res.json(contact);
+    });           
 };
 
 // UPDATE THE CONTACT
