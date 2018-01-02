@@ -1,27 +1,21 @@
 // routes/contact.controller.js
 
-// LOAD MODULE
-const fs = require('fs');
-
 // DEFINE MODEL
-var Contact = require('../models/contact');
+const Contact = require('../models/contact');
 
 // GET ALL CONTACTS 
 exports.show = function(req, res){
     Contact.find(function(err, contacts){
-        if (err)
-            return res.status(500).send({error: 'database failure'});
-            res.json(contacts);
+        if (err) return res.status(500).send({ error: 'database failure' });
+        res.json(contacts);
     });
 };
 
 // GET SINGLE CONTACT
 exports.index = function(req, res){
     Contact.findOne({_id: req.params.contact_id}, function(err, contact){
-        if (err)
-           return res.status(500).json({error: err});
-        if (!contact)
-           return res.status(404).json({error: 'contact not found'});
+        if (err) return res.status(500).json({ error: err });
+        if (!contact) return res.status(404).json({ error: 'contact not found' });
         res.json(contact);
     });
 };
@@ -29,10 +23,8 @@ exports.index = function(req, res){
 // GET CONTACT BY NAME
 exports.find_by_name = function(req, res){
     Contact.find({name: req.params.name}, {_id: 0, name: 1, number: 1, email: 1}, function(err, contact){
-        if (err)
-            return res.status(500).json({error: err});
-        if (!contact)
-            return res.status(404).json({error: 'contact not found'});
+        if (err) return res.status(500).json({ error: err });
+        if (!contact) return res.status(404).json({ error: 'contact not found' });
         res.json(contact);
     });
 };
