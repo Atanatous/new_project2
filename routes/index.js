@@ -29,15 +29,16 @@ const upload = multer({ storage: storage });
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
+
 // ROUTING CONTROL FOR IMAGE
 router.get('/images', image_controller.show);
-router.get('/images/:image_id', image_controller.index);
+router.get('/images/:filename', image_controller.find_by_name);
 //router.post('/images', image_controller.upload);
 router.post('/images', upload.array('img', 10), image_controller.upload);
 
 // ROUTING CONTROL FOR CONTACT
 router.get('/contacts', contact_controller.show);
-router.get('/contacts/:contact_id', contact_controller.index);
+router.get('/contacts/type/:type', contact_controller.find_by_type);
 router.get('/contacts/name/:name', contact_controller.find_by_name);
 router.post('/contacts', contact_controller.create);
 router.put('/contacts/:contact_id', contact_controller.update);

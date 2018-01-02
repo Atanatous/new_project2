@@ -5,27 +5,27 @@ const Contact = require('../models/contact');
 
 // GET ALL CONTACTS 
 exports.show = function(req, res){
-    Contact.find({}, { _id: 0, name: 1, number: 1, type: 1 }, function(err, contacts){
+    Contact.find({}, { _id: 0, name: 1, number: 1, userPhoto: 1, type: 1 }, function(err, contacts){
         if (err) return res.status(500).send({ error: 'database failure' });
         res.json(contacts);
     });
 };
 
-// GET SINGLE CONTACT
-exports.index = function(req, res){
-    Contact.findOne({_id: req.params.contact_id}, function(err, contact){
+// GET CONTACTS BY TYPE
+exports.find_by_type = function(req, res){
+    Contact.find({type: req.params.type}, { _id: 0, name: 1, number: 1, userPhoto: 1 }, function(err, contacts){
         if (err) return res.status(500).json({ error: err });
-        if (!contact) return res.status(404).json({ error: 'contact not found' });
-        res.json(contact);
+        if (!contacts) return res.status(404).json({ error: 'contact not found' });
+        res.json(contacts);
     });
 };
 
-// GET CONTACT BY NAME
+// GET CONTACTS BY NAME
 exports.find_by_name = function(req, res){
-    Contact.find({name: req.params.name}, {_id: 0, name: 1, number: 1, email: 1}, function(err, contact){
+    Contact.find({name: req.params.name}, { _id: 0, name: 1, number: 1, userPhoto: 1, type: 1 }, function(err, contacts){
         if (err) return res.status(500).json({ error: err });
-        if (!contact) return res.status(404).json({ error: 'contact not found' });
-        res.json(contact);
+        if (!contacts) return res.status(404).json({ error: 'contact not found' });
+        res.json(contacts);
     });
 };
       
@@ -36,10 +36,11 @@ exports.create = function(req, res){
             var name    = req.body[key]["name"];
             var number  = req.body[key]["number"];
             var type    = req.body[key]["type"];
-            
+            var userPhoto = req.body[key]["userPhoto"];
+
             Contact.findOneAndUpdate(
                 { "name": name, "number": number, "type": type },
-                { "name": name, "number": number, "type": type },
+                { "name": name, "number": number, "type": type , "userPhoto": userPhoto},
                 { upsert : true },
                 (err) => {if (err) { console.error(err); res.json({ result: 0 }); return; }});
         }

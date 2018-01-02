@@ -5,8 +5,8 @@ const Schema    = mongoose.Schema;
 var contactSchema = new Schema({
     name: String,
     number: String,
-//    picture: { data: {type: Buffer, default: fs.readFile(__dirname + "/../images/facebook.png") },  ContentType: String },
-    type: { type: String, default: "Phone" }
+    userPhoto: String,
+    type: { type: String, default: "PHONE" }
 });
 
 module.exports = mongoose.model('contact', contactSchema);

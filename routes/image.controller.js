@@ -7,17 +7,18 @@ const multiparty = require('multiparty');
 
 // GET ALL IMAGE's PATH
 exports.show = function(req, res){
-    Image.find({}, {_id: 0, filename: 1}, function(err, images) {
+    Image.find({}, { _id: 0, filename: 1 }, function(err, images) {
         if (err) return res.status(500).json({ error: err });
         res.json(images);
+    });
 }
 
-// GET SINGLE IMAGE
-exports.index = function(req, res){
-    Image.findOne({_id: req.params.image_id}, function(err, image){
+// GET IMAGE PATH BY NAME
+exports.find_by_name = function(req, res){
+    Image.findOne({ filename: req.params.filename }, { _id: 0, filename: 1 }, function(err, image){
         if (err) return res.status(500).json({ error: err });
         if (!image) return res.status(404).json({ error: 'Image Not Found' });
-        var file = __dirname + "/../public/images" + image.filename;
+        var file = __dirname + "/../public/images/" + image.filename;
         res.download(file);
     });
 }
