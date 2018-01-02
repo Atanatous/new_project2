@@ -25,6 +25,7 @@ mongoose.connect('mongodb://localhost/test');
 
 // [CONFIGURE ROUTER]
 app.use('/api', require('./routes'));
+app.use(express.static(__dirname + '/public'));
 
 // [RUN SERVER]
 var server = app.listen(port, function(){   

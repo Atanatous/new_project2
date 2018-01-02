@@ -5,29 +5,11 @@ const Image = require('../models/image');
 const fs = require('fs');
 const multiparty = require('multiparty');
 
-// GET ALL IMAGES
+// GET ALL IMAGE's PATH
 exports.show = function(req, res){
-    console.log("Ready to Show");
-    Image.find(function(err, images){
-        if (err) return res.status(500).send({ error: 'database failure' });
-        console.log(images);
-        var file;
-        res.writeHead(200, { 'Content-Type': 'image/png' });
-        for (var key in images){
-            console.log("Confusing..");
-            var filename = images[key]["filename"];
-            var mimetype = images[key]["mimetype"];
-            var size = images[key]["size"];
-            
-            file = fs.readFile(__dirname + "/../images/" + filename,
-                    function(err, data){
-                        if (err) throw err;
-                        res.write(data);
-            });
-        }
-        res.end();
-        console.log("Finish!");
-    });
+    Image.find({}, {_id: 0, filename: 1}, function(err, images) {
+        if (err) return res.status(500).json({ error: err });
+        res.json(images);
 }
 
 // GET SINGLE IMAGE
@@ -35,7 +17,7 @@ exports.index = function(req, res){
     Image.findOne({_id: req.params.image_id}, function(err, image){
         if (err) return res.status(500).json({ error: err });
         if (!image) return res.status(404).json({ error: 'Image Not Found' });
-        var file = __dirname + "/../images/" + image.filename;
+        var file = __dirname + "/../public/images" + image.filename;
         res.download(file);
     });
 }
