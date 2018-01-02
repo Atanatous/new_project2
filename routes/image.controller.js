@@ -19,9 +19,10 @@ exports.show = function(req, res){
             var mimetype = images[key]["mimetype"];
             var size = images[key]["size"];
             
-            file = fs.readFile(__dirname + "/../images/" + filename, function(err, data){
-                    if (err) throw err;
-            res.write(data);
+            file = fs.readFile(__dirname + "/../images/" + filename,
+                    function(err, data){
+                        if (err) throw err;
+                        res.write(data);
             });
         }
         res.end();
@@ -41,21 +42,17 @@ exports.index = function(req, res){
 
 // UPLOAD IMAGE
 exports.upload = function(req, res) {
-    console.log(req.files);
     for (var key in req.files) {
-        Image
-        var image = new Image();
-        image.filename = req.files[key]["filename"];
-        image.mimetype = req.files[key]["mimetype"];
-        image.size = req.files[key]["size"];
-        image.save(function(err) {
-            if (err) {
-                console.error(err);
-                res.json({ result: 0 });
-                return;
-            }
-        });
+        var filename = req.files[key]["filename"];
+        var mimetype = req.files[key]["mimetype"];
+        var size     = req.files[key]["size"];
+        
+        Image.findOneAndUpdate(
+            { "filename": filename, "mimetype": mimetype },
+            { "filename": filename, "mimetype": mimetype, "size": size },
+            { upsert : true },
+            function(){
+            });
     }
-    console.log("Image Path Added");
     res.json({ result: 1 });
 }
