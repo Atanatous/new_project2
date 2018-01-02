@@ -43,6 +43,7 @@ exports.index = function(req, res){
 exports.upload = function(req, res) {
     console.log(req.files);
     for (var key in req.files) {
+        Image
         var image = new Image();
         image.filename = req.files[key]["filename"];
         image.mimetype = req.files[key]["mimetype"];
