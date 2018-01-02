@@ -51,8 +51,7 @@ exports.upload = function(req, res) {
             { "filename": filename, "mimetype": mimetype },
             { "filename": filename, "mimetype": mimetype, "size": size },
             { upsert : true },
-            function(){
-            });
-    }
+            (err) => { if (err) { console.error(err); res.json({ result: 0 }); return; }});
+        }
     res.json({ result: 1 });
 }
