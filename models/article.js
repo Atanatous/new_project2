@@ -3,8 +3,11 @@
 // IMPORT MODULE
 const mongoose  = require('mongoose');
 const Schema    = mongoose.Schema;
-const Comment   = require('./comment');
-const CommentSchema = mongoose.model('Comment').schema
+
+var commentSchema = new Schema({
+    username: String,
+    message: String
+})
 
 var articleSchema = new Schema({
     title: String,
@@ -12,7 +15,7 @@ var articleSchema = new Schema({
     image: String,
     score: Number,
     numVoted: Number,
-    comments: [CommentSchema]
+    comments: [commentSchema],
 })
 
 module.exports = mongoose.model('article', articleSchema);

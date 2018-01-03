@@ -15,20 +15,20 @@ exports.show = function(req, res) {
 
 // POST COMMENT IN ARTICLE
 exports.add_comment = function(req, res) {
-    Article.find({ title: req.body.title }, function(err, article) {
+    Article.findOne({ title: req.body.title }, function(err, article) {
         if (err) return res.status(500).json({ error: err });
         if (!article) return res.status(404).json({ error: 'movie not found' });
         
         comment = new Comment();
         comment.username = req.body.username;
         comment.message = req.body.message;
+        article.comments.push(comment);
+        article.score = (article.numVoted * article.score + req.body.score) / (article.numVoted + 1);       
+        article.numVoted = article.numVoted + 1;
 
-        comment.save(function(err) {
-                if (err) { console.error(err); res.json({ result: 0 }); return; }
-                res.json({ result: 1 });
-            });
-       
-        article.comment.insert(comment);
+        article.save(function (err) {
+            if (!err) res.json(article);
         });
+    });
 }
 
