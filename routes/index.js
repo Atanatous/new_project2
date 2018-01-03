@@ -31,7 +31,8 @@ const upload = multer({ storage: storage });
 //////////////////////////////////////////////////////////////////
 
 // ROUTING CONTROL FOR ARTICLE
-router.get('/articles/:title', article_controller.show);
+router.get('/articles', article_controller.show);
+router.get('/articles/:title', article_controller.find_by_name);
 router.post('/articles', article_controller.add_comment);
 
 // ROUTING CONTROL FOR IMAGE

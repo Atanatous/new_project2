@@ -11,7 +11,7 @@ var commentSchema = new Schema({
 
 var articleSchema = new Schema({
     title: String,
-    content: String,
+    description: String,
     image: String,
     score: Number,
     numVoted: Number,
