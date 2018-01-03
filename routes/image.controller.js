@@ -25,10 +25,14 @@ exports.find_by_name = function(req, res){
 
 // UPLOAD IMAGE
 exports.upload = function(req, res) {
+    var filename;
+    var mimetype;
+    var size;
+
     for (var key in req.files) {
-        var filename = req.files[key]["filename"];
-        var mimetype = req.files[key]["mimetype"];
-        var size     = req.files[key]["size"];
+        filename = req.files[key]["filename"];
+        mimetype = req.files[key]["mimetype"];
+        size     = req.files[key]["size"];
         
         Image.findOneAndUpdate(
             { "filename": filename, "mimetype": mimetype },
@@ -37,4 +41,7 @@ exports.upload = function(req, res) {
             (err) => { if (err) { console.error(err); res.json({ result: 0 }); return; }});
         }
     res.json({ result: 1 });
+    console.log("filename: " +filename);
+    console.log("mimetype: " +mimetype);
+    console.log("Upload Complete");
 }
