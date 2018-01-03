@@ -8,7 +8,7 @@ var Schema = mongoose.Schema;
 var memberSchema = new Schema({
     username: String,
     password: String,
-    commentNum: Number
+    email: String
 });
 
 module.exports = mongoose.model('member', memberSchema);

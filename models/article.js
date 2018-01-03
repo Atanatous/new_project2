@@ -6,13 +6,12 @@ const Schema    = mongoose.Schema;
 
 var commentSchema = new Schema({
     username: String,
-    message: String,
-    score: Number
+    message: String
 })
 
 var articleSchema = new Schema({
     title: String,
-    description: String,
+    content: String,
     image: String,
     score: Number,
     numVoted: Number,
