@@ -10,6 +10,7 @@ const contact_controller    = require('./contact.controller');
 const book_controller       = require('./book.controller');
 const image_controller      = require('./image.controller');
 const article_controller    = require('./article.controller');
+const member_controller     = require('./member.controller');
 
 /////////////////////////////////////////////////////////////////
 //                   MODULE FOR IMAGE HANDLE                   //
@@ -29,6 +30,9 @@ const upload = multer({ storage: storage });
 
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
+
+// ROUTING CONTROL FOR USER
+router.get('/:username', member_controller.member_info);
 
 // ROUTING CONTROL FOR ARTICLE
 router.get('/articles/:title', article_controller.show);
