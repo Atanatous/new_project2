@@ -4,11 +4,12 @@
 //                       MODULE IMPORT                         //
 /////////////////////////////////////////////////////////////////
 
-const express                = require('express');
-const router                 = express.Router();
-const contact_controller     = require('./contact.controller');
-const book_controller        = require('./book.controller');
-const image_controller       = require('./image.controller');
+const express               = require('express');
+const router                = express.Router();
+const contact_controller    = require('./contact.controller');
+const book_controller       = require('./book.controller');
+const image_controller      = require('./image.controller');
+const article_controller    = require('./article.controller');
 
 /////////////////////////////////////////////////////////////////
 //                   MODULE FOR IMAGE HANDLE                   //
@@ -28,6 +29,10 @@ const upload = multer({ storage: storage });
 
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
+
+// ROUTING CONTROL FOR ARTICLE
+router.get('/articles/:title', article_controller.show);
+router.post('/articles', article_controller.add_comment);
 
 // ROUTING CONTROL FOR IMAGE
 router.get('/images', image_controller.show);
