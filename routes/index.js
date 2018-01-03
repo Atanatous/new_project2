@@ -29,7 +29,6 @@ const upload = multer({ storage: storage });
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
-
 // ROUTING CONTROL FOR IMAGE
 router.get('/images', image_controller.show);
 router.get('/images/:filename', image_controller.find_by_name);
@@ -41,7 +40,7 @@ router.get('/contacts/type/:type', contact_controller.find_by_type);
 router.get('/contacts/name/:name', contact_controller.find_by_name);
 router.post('/contacts', contact_controller.create);
 router.put('/contacts/:contact_id', contact_controller.update);
-router.delete('/contacts/:contact_id', contact_controller.destroy);
+router.delete('/contacts', contact_controller.destroy);
 
 // ROUTING CONTROL FOR BOOK
 router.get('/books', book_controller.show);

@@ -87,7 +87,7 @@ exports.update = function(req, res){
 
 // DELETE CONTACT
 exports.destroy = function(req, res){
-    Contact.remove({ _id: req.params.contact_id }, function(err, output){
+    Contact.remove({}, function(err, output){
         if (err) return res.status(500).json({ error: "database failure" });
         res.status(204).end();
     });

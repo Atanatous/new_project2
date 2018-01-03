@@ -1,5 +1,7 @@
+// ./models/contact.js
+
+// LOAD MODULE
 const mongoose  = require('mongoose');
-const fs        = require('fs');
 const Schema    = mongoose.Schema;
 
 var contactSchema = new Schema({
