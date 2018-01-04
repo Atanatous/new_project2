@@ -6,7 +6,8 @@ const Schema    = mongoose.Schema;
 
 var commentSchema = new Schema({
     username: String,
-    message: String
+    message: String,
+    score: Number
 })
 
 var articleSchema = new Schema({

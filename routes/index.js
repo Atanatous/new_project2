@@ -10,6 +10,7 @@ const contact_controller    = require('./contact.controller');
 const book_controller       = require('./book.controller');
 const image_controller      = require('./image.controller');
 const article_controller    = require('./article.controller');
+const Member                = require('../models/member');
 
 /////////////////////////////////////////////////////////////////
 //                   MODULE FOR IMAGE HANDLE                   //
